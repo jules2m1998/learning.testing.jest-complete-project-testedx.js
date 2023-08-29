@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import RepositoriesListItem from "./RepositoriesListItem";
 import { MemoryRouter } from "react-router";
+import { async } from "validate.js";
 
 function renderComponent() {
   const repository = {
@@ -19,16 +20,15 @@ function renderComponent() {
 }
 const pause = () => {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(), 100);
+    setTimeout(resolve, 100);
   });
 };
-
-jest.mock("./../tree/FileIcon", () => {
-  return () => <>File Icon Component</>;
-});
 
 describe("RepositoriesListItem", () => {
   test("show a link to the github homepage for this repository", async () => {
     renderComponent();
+    await act(async () => {
+      await pause();
+    });
   });
 });
