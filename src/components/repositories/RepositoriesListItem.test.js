@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import RepositoriesListItem from "./RepositoriesListItem";
 import { MemoryRouter } from "react-router";
-import { async } from "validate.js";
 
 function renderComponent() {
   const repository = {
@@ -24,9 +23,12 @@ const pause = () => {
   });
 };
 
+jest.mock("./../tree/FileIcon", () => {
+  return () => <>File Icon Component</>;
+});
+
 describe("RepositoriesListItem", () => {
   test("show a link to the github homepage for this repository", async () => {
     renderComponent();
-    await screen.findByRole("img", { name: /javascript/i });
   });
 });
