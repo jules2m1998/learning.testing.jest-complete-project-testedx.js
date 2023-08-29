@@ -2,12 +2,15 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import AuthButtons from "./AuthButtons";
 import { createServer } from "../../test/server";
+import { SWRConfig } from "swr";
 
 async function renderComponent() {
   render(
-    <MemoryRouter>
-      <AuthButtons />
-    </MemoryRouter>
+    <SWRConfig value={{ provider: () => new Map() }}>
+      <MemoryRouter>
+        <AuthButtons />
+      </MemoryRouter>
+    </SWRConfig>
   );
   await screen.findAllByRole("link");
 }
@@ -18,7 +21,7 @@ describe("when user is not signed in", () => {
       res: () => ({ user: null }),
     },
   ]);
-  test.only("sign in and sign up are visible", async () => {
+  test("sign in and sign up are visible", async () => {
     await renderComponent();
     const signInButton = screen.getByRole("link", { name: /sign in/i });
     const signUpButton = screen.getByRole("link", { name: /sign up/i });
