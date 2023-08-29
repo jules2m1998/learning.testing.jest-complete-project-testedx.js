@@ -14,7 +14,7 @@ async function repositoriesFetcher([url, searchQuery]) {
 
 export default function useRepositories(searchQuery) {
   const { data, error, isLoading } = useSWR(
-    searchQuery && ["http://localhost:8001/api/repositories", searchQuery],
+    searchQuery && ["/api/repositories", searchQuery],
     repositoriesFetcher
   );
 
